@@ -1,0 +1,3 @@
+- Security should keep credentials for a little while instead of asking all the time.
+- There is no way to refresh the display in case the command-line is used directly or that the file is editted by hand.
+- Need a better icon.
