@@ -59,6 +59,10 @@
 	[theMenu addItemWithTitle:@"Quit" action:@selector(terminate:) keyEquivalent:@"Q"];
 	[statusItem setMenu:theMenu];
 	[theMenu release];
+
+	OSStatus err = AuthorizationCreate(NULL, kAuthorizationEmptyEnvironment, kAuthorizationFlagInteractionAllowed, &auth);
+	if (err != errAuthorizationSuccess)
+		NSLog(@"AuthorizationCreate returned %@\n", err);
 }
 
 -(NSArray *)status
@@ -103,13 +107,7 @@
 			state = NSOnState;
 	}
 	
-	AuthorizationRef auth;
-	OSStatus err = AuthorizationCreate(NULL, kAuthorizationEmptyEnvironment, kAuthorizationFlagInteractionAllowed, &auth);
-	if (err != errAuthorizationSuccess) {
-		NSLog(@"AuthorizationCreate returned %@\n", err);
-		return;
-	}
-	err = AuthorizationExecuteWithPrivileges(auth, command, kAuthorizationFlagDefaults, args, NULL);
+	OSStatus err = AuthorizationExecuteWithPrivileges(auth, command, kAuthorizationFlagDefaults, args, NULL);
 	if (err != errAuthorizationSuccess) {
 		NSLog(@"AuthorizationExecuteWithPrivileges returned %@\n", err);
 		return;

@@ -1,0 +1,10 @@
+Revision history for HostfileManager
+
+0.02    November 24, 2010 09:43 PST
+        Moved auth from local to instance variable (making it ask for
+        authentication once instead of for every operation).
+        Added README and TODO files to disk image.
+
+0.01    November 24, 2010 08:37 PST
+        First version, released on an unsuspecting world.
+

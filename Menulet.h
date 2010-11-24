@@ -10,6 +10,7 @@
 
 @interface Menulet : NSObject {
     NSStatusItem *statusItem;
+	AuthorizationRef auth;
 }
 
 -(NSArray *) status;
