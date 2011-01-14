@@ -19,7 +19,7 @@
 ################################################################################
 
 NAME ?= HostfileManager
-VERSION ?= 0.2
+VERSION ?= 0.3
 
 SOURCE_DIR ?= src
 SOURCE_FILES ?= HostfileManager.app README TODO

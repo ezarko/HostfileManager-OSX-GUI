@@ -5,3 +5,8 @@ To get started you need to install hostfiles and get it up and running.  You can
 ![Screenshot](/ezarko/HostfileManager-OSX-GUI/raw/master/hmss.png)
 
 Using the hostfile manager is simple.  Click on the grasshopper icon in the Menu Bar, then click on a named hostfile to enable/disable it.  A checkmark indicates that the hostfile fragment is enabled and unmodified.  A minus sign indicates that the hostfile fragment is enabled, but has been modified.
+
+Changes:
+
+0.3 - 1/14/2011
+      Added refresh capability.

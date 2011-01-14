@@ -12,15 +12,13 @@
 
 -(void)dealloc
 {
+	[theMenu release];
     [statusItem release];
 	[super dealloc];
 }
 
 -(void)awakeFromNib
 {
-	NSMenu        *theMenu;
-	NSMenuItem    *theMenuItem;
-	
 	statusItem = [[[NSStatusBar systemStatusBar] 
 				   statusItemWithLength:NSVariableStatusItemLength]
 				  retain];
@@ -33,32 +31,16 @@
 
 	theMenu = [[NSMenu alloc] initWithTitle:@""];
 
-	NSArray *fragments = [self status];
-	for (int i = 0; i < [fragments count]; ++i) {
-		NSString *text = [fragments objectAtIndex:i];
-		theMenuItem = [[NSMenuItem alloc] initWithTitle:[text substringFromIndex:2] action:@selector(toggleFragment:) keyEquivalent:@""];
-		[theMenuItem setTarget:self];
-		switch ([text characterAtIndex:0]) {
-			case '+':
-				[theMenuItem setState:NSOnState];
-				break;
-			case '*':
-				[theMenuItem setState:NSMixedState];
-				break;
-			case ' ':
-				[theMenuItem setState:NSOffState];
-				break;
-			default:
-				NSLog(@"Unknown state:%@\n", [text characterAtIndex:0]);
-		}
-		[theMenu addItem:theMenuItem];
-	}
+	[self refresh:self];
 
 	[theMenu addItem:[NSMenuItem separatorItem]];
 
+	NSMenuItem *theMenuItem = [[NSMenuItem alloc] initWithTitle:@"Refresh" action:@selector(refresh:) keyEquivalent:@"R"];
+	[theMenuItem setTarget:self];
+	[theMenu addItem:theMenuItem];
+
 	[theMenu addItemWithTitle:@"Quit" action:@selector(terminate:) keyEquivalent:@"Q"];
 	[statusItem setMenu:theMenu];
-	[theMenu release];
 
 	OSStatus err = AuthorizationCreate(NULL, kAuthorizationEmptyEnvironment, kAuthorizationFlagInteractionAllowed, &auth);
 	if (err != errAuthorizationSuccess)
@@ -88,6 +70,36 @@
 	theRange.location = 0;
 	theRange.length = [lines count] - 1;
 	return [lines subarrayWithRange:theRange];
+}
+
+-(IBAction)refresh:(id)sender
+{
+	// remove items up to sepaerator
+	for (int i = [theMenu numberOfItems] - 4; i >= 0; --i) {
+		[theMenu removeItemAtIndex:i];
+	}
+	
+	// insert items before separator
+	NSArray *fragments = [self status];
+	for (int i = 0; i < [fragments count]; ++i) {
+		NSString *text = [fragments objectAtIndex:i];
+		NSMenuItem *theMenuItem = [[NSMenuItem alloc] initWithTitle:[text substringFromIndex:2] action:@selector(toggleFragment:) keyEquivalent:@""];
+		[theMenuItem setTarget:self];
+		switch ([text characterAtIndex:0]) {
+			case '+':
+				[theMenuItem setState:NSOnState];
+				break;
+			case '*':
+				[theMenuItem setState:NSMixedState];
+				break;
+			case ' ':
+				[theMenuItem setState:NSOffState];
+				break;
+			default:
+				NSLog(@"Unknown state:%@\n", [text characterAtIndex:0]);
+		}
+		[theMenu insertItem:theMenuItem atIndex:i];
+	}
 }
 
 -(IBAction)toggleFragment:(id)sender

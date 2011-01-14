@@ -11,9 +11,11 @@
 @interface Menulet : NSObject {
     NSStatusItem *statusItem;
 	AuthorizationRef auth;
+	NSMenu *theMenu;
 }
 
 -(NSArray *) status;
+-(IBAction)refresh:(id)sender;
 -(IBAction)toggleFragment:(id)sender;
 
 @end

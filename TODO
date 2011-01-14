@@ -1,1 +1,3 @@
-- There is no way to refresh the display in case the command-line is used directly or that the file is edited by hand.
+* Cancel authentication crashes application
+* Consider adding an option to actually fetch the host file via HTTP for opal hosts.
+* At the very least the order of the menu items should be sorted alphabetically. It may be advantageous to create a nested menu structure to mirror directory structure if there are any directories present.
