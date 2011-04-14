@@ -69,7 +69,7 @@
 	NSRange theRange;
 	theRange.location = 0;
 	theRange.length = [lines count] - 1;
-	return [lines subarrayWithRange:theRange];
+	return [[lines subarrayWithRange:theRange] sortedArrayUsingSelector:@selector(localizedCompare:)];
 }
 
 -(IBAction)refresh:(id)sender
