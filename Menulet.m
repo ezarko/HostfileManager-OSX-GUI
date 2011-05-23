@@ -47,6 +47,14 @@
 		NSLog(@"AuthorizationCreate returned %@\n", err);
 }
 
+NSInteger substringSort(id string1, id string2, void *context)
+{
+    NSString* v1 = [string1 substringFromIndex:2];
+    NSString* v2 = [string2 substringFromIndex:2];
+    return [v1 localizedCompare:v2];
+}
+
+
 -(NSArray *)status
 {
 	NSTask *task;
@@ -69,8 +77,9 @@
 	NSRange theRange;
 	theRange.location = 0;
 	theRange.length = [lines count] - 1;
-	return [lines subarrayWithRange:theRange];
+	return [[lines subarrayWithRange:theRange] sortedArrayUsingFunction:substringSort context:NULL];
 }
+
 
 -(IBAction)refresh:(id)sender
 {
